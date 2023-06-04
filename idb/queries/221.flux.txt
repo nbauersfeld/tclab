@@ -1,0 +1,2 @@
+table|_measurement|delay|maximum|minimum
+0|shellies|1360105|2023-04-20T09:57:50.383191+00:00|2023-04-04T16:09:25.378702+00:00

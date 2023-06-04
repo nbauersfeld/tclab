@@ -1,0 +1,257 @@
+[
+    {
+        "id": "4a6b272a9c7337a3",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "866fbfca8cc21251",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://192.168.178.20:4841/freeopcua/server/",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    },
+    {
+        "id": "13404008513a5d6e",
+        "type": "mqtt-broker",
+        "name": "_mqtt_",
+        "broker": "127.0.0.1",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e342dd65faeac13e",
+        "type": "inject",
+        "z": "4a6b272a9c7337a3",
+        "name": "_a_topic",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "ns=2;i=5",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "a5b0101a3c7c2800"
+            ]
+        ]
+    },
+    {
+        "id": "d9defb4dfc7ecf50",
+        "type": "debug",
+        "z": "4a6b272a9c7337a3",
+        "name": "_a_debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "021d3516eb4a6349",
+        "type": "function",
+        "z": "4a6b272a9c7337a3",
+        "name": "_u(t)_",
+        "func": "\nvar _t = msg.payload[2][1]\nvar _v = msg.payload[0][1]\n\n_v = _v > 100 || _v < 0 ? undefined : _v;\n\nvar _msg = { \n    topic: \"u\",\n    payload: {\n        \"t\": _t, \n        \"v\": _v,\n        \"unit\": \"%\"\n    }\n    };\n    \nreturn _msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 140,
+        "wires": [
+            [
+                "d1a5e2b002629f8b",
+                "f54545a3c0510b93"
+            ]
+        ]
+    },
+    {
+        "id": "6fec3d8cf5084e74",
+        "type": "function",
+        "z": "4a6b272a9c7337a3",
+        "name": "_y(t)_",
+        "func": "\nvar _t = msg.payload[2][1]\nvar _v = msg.payload[1][1]/1000.\n\n_v = _v > 100 || _v <0 ? undefined : _v;\n\nvar _msg = {\n    topic: \"y\",\n    payload: {\n        \"t\": _t, \n        \"v\": _v,\n        \"unit\": \"°C\"\n    }\n    };\n    \nreturn _msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "d1a5e2b002629f8b",
+                "48cd5d230376a5a4"
+            ]
+        ]
+    },
+    {
+        "id": "d1a5e2b002629f8b",
+        "type": "function",
+        "z": "4a6b272a9c7337a3",
+        "name": "_str_",
+        "func": "\nvar _msg = {\n    topic: msg.topic,\n    payload: \"\" + msg.payload[\"t\"] + \",\" + msg.payload[\"v\"]\n};\n\nreturn _msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a5b0101a3c7c2800",
+        "type": "OpcUa-Client",
+        "z": "4a6b272a9c7337a3",
+        "endpoint": "866fbfca8cc21251",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "500",
+        "timeUnit": "ms",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "maxChunkCount": "1601",
+        "maxMessageSize": "104857600",
+        "receiveBufferSize": "65535",
+        "sendBufferSize": "65535",
+        "name": "_a_client",
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "021d3516eb4a6349",
+                "6fec3d8cf5084e74"
+            ]
+        ]
+    },
+    {
+        "id": "45407ae11743efba",
+        "type": "mqtt out",
+        "z": "4a6b272a9c7337a3",
+        "name": "",
+        "topic": "tclab/1/T",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "13404008513a5d6e",
+        "x": 820,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "b415fb5aa639bfa9",
+        "type": "mqtt out",
+        "z": "4a6b272a9c7337a3",
+        "name": "",
+        "topic": "tclab/1/Q",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "13404008513a5d6e",
+        "x": 820,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f54545a3c0510b93",
+        "type": "function",
+        "z": "4a6b272a9c7337a3",
+        "name": "_Q_",
+        "func": "msg.topic = 'Q'\nmsg.payload = msg.payload['v']\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 140,
+        "wires": [
+            [
+                "b415fb5aa639bfa9",
+                "d9defb4dfc7ecf50"
+            ]
+        ]
+    },
+    {
+        "id": "48cd5d230376a5a4",
+        "type": "function",
+        "z": "4a6b272a9c7337a3",
+        "name": "_T_",
+        "func": "msg.topic = 'T'\nmsg.payload = msg.payload['v']\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 240,
+        "wires": [
+            [
+                "45407ae11743efba"
+            ]
+        ]
+    }
+]

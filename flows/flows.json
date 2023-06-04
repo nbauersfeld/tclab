@@ -1,0 +1,952 @@
+[
+    {
+        "id": "26db7d62b18dbfac",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5ea6383bb3bd996d",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f2cfdc9ff5d4ce33",
+        "type": "Opcua-Endpoint-Instance",
+        "endpoint": "opc.tcp://localhost:4841/freeopcua/server/",
+        "user": "test",
+        "password": "test",
+        "secpolicy": "None",
+        "secmode": "None"
+    },
+    {
+        "id": "3990dcc84524f2c7",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://localhost:4841/freeopcua/server/",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    },
+    {
+        "id": "4f9ecc28da011780",
+        "type": "Opcua-Browse-Subscribe",
+        "z": "26db7d62b18dbfac",
+        "d": true,
+        "name": "",
+        "endpoint": "f2cfdc9ff5d4ce33",
+        "topic": "",
+        "time": "5",
+        "timeUnit": "s",
+        "nodeClass": "All",
+        "dataType": "All",
+        "crushResCheckedItems": true,
+        "items": [
+            {
+                "nodeId": "ns=0;i=85",
+                "name": "Objects",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=40",
+                "name": "Unknown",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=61",
+                "name": "FolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=35",
+                "name": "Unknown",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=2253",
+                "name": "Server",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=23470",
+                "name": "Aliases",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=2;i=10001",
+                "name": "_custom",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=2;i=6",
+                "name": "_object",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=45",
+                "name": "Unknown",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=11564",
+                "name": "OperationLimitsType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13353",
+                "name": "FileDirectoryType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=17591",
+                "name": "DictionaryFolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=16405",
+                "name": "AlarmGroupType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13813",
+                "name": "CertificateGroupFolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=17496",
+                "name": "KeyCredentialConfigurationFolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=23556",
+                "name": "AuthorizationServicesConfigurationFolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=15452",
+                "name": "SecurityGroupFolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25346",
+                "name": "PubSubKeyPushTargetFolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=14477",
+                "name": "DataSetFolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=23795",
+                "name": "SubscribedDataSetFolderType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=23456",
+                "name": "AliasNameCategoryType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=16362",
+                "name": "AlarmGroupMember",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=2004",
+                "name": "ServerType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=46",
+                "name": "Unknown",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=2254",
+                "name": "ServerArray",
+                "dataType": "String"
+            },
+            {
+                "nodeId": "ns=0;i=2255",
+                "name": "NamespaceArray",
+                "dataType": "String"
+            },
+            {
+                "nodeId": "ns=0;i=15004",
+                "name": "UrisVersion",
+                "dataType": "VersionTime"
+            },
+            {
+                "nodeId": "ns=0;i=47",
+                "name": "Unknown",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=2256",
+                "name": "ServerStatus",
+                "dataType": "ServerStatusDataType"
+            },
+            {
+                "nodeId": "ns=0;i=2267",
+                "name": "ServiceLevel",
+                "dataType": "Byte"
+            },
+            {
+                "nodeId": "ns=0;i=2994",
+                "name": "Auditing",
+                "dataType": "Boolean"
+            },
+            {
+                "nodeId": "ns=0;i=12885",
+                "name": "EstimatedReturnTime",
+                "dataType": "DateTime"
+            },
+            {
+                "nodeId": "ns=0;i=17634",
+                "name": "LocalTime",
+                "dataType": "TimeZoneDataType"
+            },
+            {
+                "nodeId": "ns=0;i=2268",
+                "name": "ServerCapabilities",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=2274",
+                "name": "ServerDiagnostics",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=2295",
+                "name": "VendorServerInfo",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=2296",
+                "name": "ServerRedundancy",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=11715",
+                "name": "Namespaces",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=11492",
+                "name": "GetMonitoredItems",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=12873",
+                "name": "ResendData",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=12749",
+                "name": "SetSubscriptionDurable",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=12886",
+                "name": "RequestServerStateChange",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=17594",
+                "name": "Dictionaries",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=12637",
+                "name": "ServerConfiguration",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=14443",
+                "name": "PublishSubscribe",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=24226",
+                "name": "Resources",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=23476",
+                "name": "FindAlias",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=23479",
+                "name": "TagVariables",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=23488",
+                "name": "Topics",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=2;i=1",
+                "name": "_device",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=2;i=4",
+                "name": "_sensor",
+                "dataType": "Double"
+            },
+            {
+                "nodeId": "ns=2;i=5",
+                "name": "_id",
+                "dataType": "String"
+            },
+            {
+                "nodeId": "ns=0;i=58",
+                "name": "BaseObjectType",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=2;i=7",
+                "name": "_t",
+                "dataType": "Double"
+            },
+            {
+                "nodeId": "ns=2;i=8",
+                "name": "_u",
+                "dataType": "Int64"
+            },
+            {
+                "nodeId": "ns=2;i=9",
+                "name": "_y",
+                "dataType": "Double"
+            },
+            {
+                "nodeId": "ns=2;i=10",
+                "name": "_switch",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=11565",
+                "name": "MaxNodesPerRead",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=12161",
+                "name": "MaxNodesPerHistoryReadData",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=12162",
+                "name": "MaxNodesPerHistoryReadEvents",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=11567",
+                "name": "MaxNodesPerWrite",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=12163",
+                "name": "MaxNodesPerHistoryUpdateData",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=12164",
+                "name": "MaxNodesPerHistoryUpdateEvents",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=11569",
+                "name": "MaxNodesPerMethodCall",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=11570",
+                "name": "MaxNodesPerBrowse",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=11571",
+                "name": "MaxNodesPerRegisterNodes",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=11572",
+                "name": "MaxNodesPerTranslateBrowsePathsToNodeIds",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=11573",
+                "name": "MaxNodesPerNodeManagement",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=11574",
+                "name": "MaxMonitoredItemsPerCall",
+                "dataType": "UInt32"
+            },
+            {
+                "nodeId": "ns=0;i=13354",
+                "name": "<FileDirectoryName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13366",
+                "name": "<FileName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13387",
+                "name": "CreateDirectory",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13390",
+                "name": "CreateFile",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13393",
+                "name": "Delete",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13395",
+                "name": "MoveOrCopy",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=17592",
+                "name": "<DictionaryFolderName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=17593",
+                "name": "<DictionaryEntryName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=16406",
+                "name": "<AlarmConditionInstance>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13814",
+                "name": "DefaultApplicationGroup",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13848",
+                "name": "DefaultHttpsGroup",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13882",
+                "name": "DefaultUserTokenGroup",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=13916",
+                "name": "<AdditionalGroup>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=17511",
+                "name": "<ServiceName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=17522",
+                "name": "CreateCredential",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=23557",
+                "name": "<ServiceName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=15453",
+                "name": "<SecurityGroupFolderName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=15459",
+                "name": "<SecurityGroupName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=15461",
+                "name": "AddSecurityGroup",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=15464",
+                "name": "RemoveSecurityGroup",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25312",
+                "name": "AddSecurityGroupFolder",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25315",
+                "name": "RemoveSecurityGroupFolder",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25317",
+                "name": "SupportedSecurityPolicyUris",
+                "dataType": "String"
+            },
+            {
+                "nodeId": "ns=0;i=25347",
+                "name": "<PushTargetFolderName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25358",
+                "name": "<PushTargetName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25366",
+                "name": "AddPushTarget",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25369",
+                "name": "RemovePushTarget",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25371",
+                "name": "AddPushTargetFolder",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=25374",
+                "name": "RemovePushTargetFolder",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=14478",
+                "name": "<DataSetFolderName>",
+                "dataType": "Unknown"
+            },
+            {
+                "nodeId": "ns=0;i=14487",
+                "name": "<PublishedDataSetName>",
+                "dataType": "Unknown"
+            }
+        ],
+        "checkedItems": [],
+        "isCheckedItemsChanged": false,
+        "x": 260,
+        "y": 180,
+        "wires": [
+            [
+                "ab22826d329bf178"
+            ]
+        ]
+    },
+    {
+        "id": "ab22826d329bf178",
+        "type": "debug",
+        "z": "26db7d62b18dbfac",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "de204f2489e56499",
+        "type": "OpcUa-Item",
+        "z": "5ea6383bb3bd996d",
+        "item": "ns=2;i=9",
+        "datatype": "Double",
+        "value": "0",
+        "name": "_y",
+        "x": 290,
+        "y": 160,
+        "wires": [
+            [
+                "9bdce210df3aaa89"
+            ]
+        ]
+    },
+    {
+        "id": "d3aeb6c7a704b38e",
+        "type": "debug",
+        "z": "5ea6383bb3bd996d",
+        "name": "monitor",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "07b72060a435369e",
+        "type": "inject",
+        "z": "5ea6383bb3bd996d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "de204f2489e56499",
+                "550a015b4d49cc11"
+            ]
+        ]
+    },
+    {
+        "id": "782675063091cace",
+        "type": "OpcUa-Client",
+        "z": "5ea6383bb3bd996d",
+        "d": true,
+        "endpoint": "3990dcc84524f2c7",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "l",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "maxChunkCount": "1601",
+        "maxMessageSize": "104857600",
+        "receiveBufferSize": "65535",
+        "sendBufferSize": "65535",
+        "name": "_u_client",
+        "x": 460,
+        "y": 340,
+        "wires": [
+            [
+                "26adc1c3e0237895"
+            ]
+        ]
+    },
+    {
+        "id": "550a015b4d49cc11",
+        "type": "OpcUa-Item",
+        "z": "5ea6383bb3bd996d",
+        "item": "ns=2;i=8",
+        "datatype": "Int8",
+        "value": "0",
+        "name": "_u",
+        "x": 290,
+        "y": 340,
+        "wires": [
+            [
+                "782675063091cace"
+            ]
+        ]
+    },
+    {
+        "id": "fef4bca6d994d82a",
+        "type": "OpcUa-Client",
+        "z": "5ea6383bb3bd996d",
+        "d": true,
+        "endpoint": "3990dcc84524f2c7",
+        "action": "browse",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "l",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "maxChunkCount": "1601",
+        "maxMessageSize": "104857600",
+        "receiveBufferSize": "65535",
+        "sendBufferSize": "65535",
+        "name": "_client_browse",
+        "x": 500,
+        "y": 580,
+        "wires": [
+            [
+                "d3aeb6c7a704b38e"
+            ]
+        ]
+    },
+    {
+        "id": "665db42419cfc954",
+        "type": "inject",
+        "z": "5ea6383bb3bd996d",
+        "name": "browse_y",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "n=2",
+        "payload": "_y",
+        "payloadType": "str",
+        "x": 120,
+        "y": 580,
+        "wires": [
+            [
+                "fef4bca6d994d82a"
+            ]
+        ]
+    },
+    {
+        "id": "26adc1c3e0237895",
+        "type": "change",
+        "z": "5ea6383bb3bd996d",
+        "name": "transform",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload[1]",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 340,
+        "wires": [
+            [
+                "d3aeb6c7a704b38e"
+            ]
+        ]
+    },
+    {
+        "id": "9bdce210df3aaa89",
+        "type": "OpcUa-Client",
+        "z": "5ea6383bb3bd996d",
+        "d": true,
+        "endpoint": "3990dcc84524f2c7",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "l",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "maxChunkCount": "1601",
+        "maxMessageSize": "104857600",
+        "receiveBufferSize": "65535",
+        "sendBufferSize": "65535",
+        "name": "_y_client",
+        "x": 460,
+        "y": 160,
+        "wires": [
+            [
+                "d3aeb6c7a704b38e"
+            ]
+        ]
+    },
+    {
+        "id": "da2b14c486bdf6cc",
+        "type": "OpcUa-Client",
+        "z": "5ea6383bb3bd996d",
+        "endpoint": "3990dcc84524f2c7",
+        "action": "method",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "l",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "maxChunkCount": "1601",
+        "maxMessageSize": "104857600",
+        "receiveBufferSize": "65535",
+        "sendBufferSize": "65535",
+        "name": "_u_client_method",
+        "x": 550,
+        "y": 660,
+        "wires": [
+            [
+                "d3aeb6c7a704b38e"
+            ]
+        ]
+    },
+    {
+        "id": "be694c6e30bc2bb5",
+        "type": "inject",
+        "z": "5ea6383bb3bd996d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 130,
+        "y": 700,
+        "wires": [
+            [
+                "67fe536d3ccb1ddf",
+                "23dd9a039c58a1e0"
+            ]
+        ]
+    },
+    {
+        "id": "67fe536d3ccb1ddf",
+        "type": "OpcUa-Method",
+        "z": "5ea6383bb3bd996d",
+        "endpoint": "3990dcc84524f2c7",
+        "objectId": "ns=2;i=6",
+        "methodId": "ns=2;i=10",
+        "name": "_switch",
+        "inputArguments": [],
+        "outputArguments": [],
+        "arg0name": "v",
+        "arg0type": "Int32",
+        "arg0typeid": "0",
+        "arg0value": "66",
+        "arg1name": "",
+        "arg1type": "",
+        "arg1typeid": "",
+        "arg1value": "",
+        "arg2name": "",
+        "arg2type": "",
+        "arg2typeid": "",
+        "arg2value": "",
+        "out0name": "r",
+        "out0type": "Int32",
+        "out0typeid": "0",
+        "out0value": "",
+        "x": 300,
+        "y": 700,
+        "wires": [
+            [
+                "3dd5ee529fa70cb0"
+            ]
+        ]
+    },
+    {
+        "id": "4cd70e6e6914d047",
+        "type": "debug",
+        "z": "5ea6383bb3bd996d",
+        "name": "f_view",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "3dd5ee529fa70cb0",
+        "type": "function",
+        "z": "5ea6383bb3bd996d",
+        "name": "inject",
+        "func": "msg.topic = \"ns=2\";\n\nlet v = (Math.random() * 100).toFixed(0);\nmsg.inputArguments[0].value = v;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 820,
+        "wires": [
+            [
+                "da2b14c486bdf6cc",
+                "4cd70e6e6914d047"
+            ]
+        ]
+    },
+    {
+        "id": "23dd9a039c58a1e0",
+        "type": "function",
+        "z": "5ea6383bb3bd996d",
+        "name": "function 1",
+        "func": "this.status({ fill: \"red\", shape: \"ring\", text: msg.payload });\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    }
+]

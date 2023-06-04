@@ -1,0 +1,1 @@
+openssl pkcs12 -inkey private.pem -in certficate.der -export -out certificate.pfx
