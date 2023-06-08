@@ -1,0 +1,48 @@
+import "join"
+
+// lorry number with pack signal
+pack = from(bucket: "factory")
+|> range(start: -60d)
+|> filter(fn: (r) => (r._measurement == "AFB" and (r.Signal == "KameraP" and r.Assembly == "Packaging") and (r._value != 0)))
+|> keep(columns: ["_time","_value"])
+|> set(key: "_label", value: "p")
+
+// batch signal
+batch = from(bucket: "factory")
+|> range(start: -60d)
+|> filter(fn: (r) => (r._measurement == "AFB" and (r.Signal == "10B3" and r.Assembly == "Conveyor")))
+|> keep(columns: ["_time","_value"])
+|> set(key: "_label", value: "c")
+
+// working stream sorted
+work = join.tables(
+    method: "full",
+    left: pack,
+    right: batch,
+    on: (l, r) => l._time == r._time,
+    as: (l, r) => {        
+        time = if exists l._time then l._time else r._time
+        label = if exists l._label then l._label else r._label
+        value = if exists r._value then r._value else 0.
+        lorry = if exists l._value then l._value else 0.
+        return {_time: time, label: label, entry: value, lorry: lorry}
+    },
+)
+|> sort(columns: ["_time"])
+
+// loaded, cumulative intermediate
+loading = work
+|> cumulativeSum(columns: ["entry"])
+|> filter(fn: (r) => (r.label == "p"))
+|> sort(columns: ["_time"], desc: true)
+
+// loaded, difference by lorry entries only
+data  = loading
+|> difference(columns: ["entry"], keepFirst: true)
+|> keep(columns: ["_time","entry","lorry"])
+|> rename(columns: {"entry": "_value","lorry": "_field"})
+|> sort(columns: ["_time"])
+|> map(fn: (r) => ({r with "_value": -1.*r._value }))
+
+data
+|> yield()

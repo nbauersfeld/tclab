@@ -1,0 +1,33 @@
+import "math"
+
+delta = (tables=<-, outputField="_delta_") =>
+  tables
+    |> reduce(      
+      identity: {
+        maximum: uint(v: 0),
+        minimum: uint(v: math.maxuint),
+        delta: uint(v: 0)
+      },
+      fn: (r, accumulator) => ({
+        maximum: if uint(v: r._time) > accumulator.maximum then uint(v: r._time) else accumulator.maximum,
+        minimum: if uint(v: r._time) < accumulator.minimum then uint(v: r._time) else accumulator.minimum,
+        delta: accumulator.maximum - accumulator.minimum
+      })
+    )    
+    |> set(key: "_field", value: outputField)        
+    |> rename(columns: { delta: "_value"})    
+    
+data = from(bucket: "power")
+|> range(start: -60d)
+|> filter(fn: (r) => (r._measurement == "shellies"))
+|> drop(columns: ["Device","Location","Sensor","topic","host"])
+|> delta()
+|> filter(fn: (r) => (r._field == "_delta_"))
+|> map(fn: (r) => ({r with "_value": (r._value / uint(v: 1000000000)) }))
+|> map(fn: (r) => ({r with "minimum": time(v: r.minimum) }))
+|> map(fn: (r) => ({r with "maximum": time(v: r.maximum) }))
+
+data 
+|> drop(columns: ["_start","_stop","_field","_measurement"])
+|> rename(columns: {_value: "delta (s)", maximum: "period end", minimum: "period begin"})
+|> yield()

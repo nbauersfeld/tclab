@@ -1,0 +1,9 @@
+data = from(bucket: "factory")
+|> range(start: -60d)
+|> filter(fn: (r) => (r._measurement == "AFB" and r.Signal == "KameraP" and r._value != 0))
+|> keep(columns: ["_value"])
+|> distinct(column: "_value")
+|> rename(columns: {"_value": "lorry" })
+
+data
+|> yield()

@@ -1,0 +1,31 @@
+// main data set by lories and their circle delays at KameraP/Packaging
+data = from(bucket: "factory")
+|> range(start: -60d)
+|> filter(fn: (r) => (r._measurement == "AFB" and r.Signal == "KameraP" and r.Assembly == "Packaging" and r._value != 0))
+|> keep(columns: ["_value","_time"])
+|> rename(columns: {"_value": "_lorry" })
+|> sort(columns: ["_lorry","_time"])
+|> map(fn: (r) => ({ r with "_delay": uint(v: r._time) / uint(v: 1000000000) }))
+|> difference(columns: ["_delay"])
+|> map(fn: (r) => ({ r with "_delay": if r._delay < 0 or r._delay > 100 then 0 else r._delay }))
+|> rename(columns: { "_delay": "_value" })
+|> keep(columns: ["_value","_lorry"])
+|> group(columns: ["_lorry"])
+
+// mean of cycle times
+dataMean = data
+|> filter(fn: (r) => (r._value != 0))
+|> mean()
+|> set(key: "_field", value: "_mean")
+
+// deviation of cycle times
+dataStddev = data
+|> filter(fn: (r) => (r._value != 0))
+|> stddev()
+|> set(key: "_field", value: "_stddev")
+
+// union and pivot
+union(tables: [dataMean,dataStddev])
+|> pivot(columnKey: ["_field"], rowKey: ["_lorry"], valueColumn: "_value")
+|> rename(columns: {"_lorry": "_lorry_number", "_mean": "_cycle_mean", "_stddev": "_cycle_stddev"})
+|> yield()
