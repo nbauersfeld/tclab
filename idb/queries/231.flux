@@ -1,5 +1,8 @@
+
+tstart = -90d
+
 data = from(bucket: "factory")
-|> range(start: -60d)
+|> range(start: tstart)
 |> filter(fn: (r) => (r._measurement == "AFB"))
 
 minTime = data

@@ -1,5 +1,7 @@
+tstart = -90d
+
 data = from(bucket: "power")
-|> range(start: -60d)
+|> range(start: tstart)
 |> filter(fn: (r) => (r._measurement == "shellies"))
 
 minTime = data

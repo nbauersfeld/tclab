@@ -1,0 +1,4 @@
+table|count|assembly
+0|61|_all_
+1|49|Conveyor
+2|12|Packaging

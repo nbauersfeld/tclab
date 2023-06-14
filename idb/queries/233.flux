@@ -1,6 +1,8 @@
 
+tstart = -90d
+
 data = from(bucket: "factory")
-|> range(start: -60d)
+|> range(start: tstart)
 |> filter(fn: (r) => (r._measurement == "AFB" and r.Signal == "KameraP" and r.Assembly == "Packaging" and r._value != 0))
 |> keep(columns: ["_value","_time"])
 |> group(columns: ["_value"])

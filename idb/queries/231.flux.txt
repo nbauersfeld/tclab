@@ -1,2 +1,1 @@
-table|_measurement|delay|maximum|minimum
-0|AFB|14335|2023-04-12T11:23:44.198963+00:00|2023-04-12T07:24:48.807770+00:00
+NONE

@@ -1,5 +1,8 @@
+
+tstart = -90d
+
 data = from(bucket: "factory")
-|> range(start: -60d)
+|> range(start: tstart)
 |> filter(fn: (r) => (r._measurement == "AFB"))
 |> keep(columns: ["Assembly","Signal","topic"])
 |> distinct(column: "topic")
@@ -13,4 +16,5 @@ dataSum = data
 
 union(tables: [dataSum, data])
 |> sort(columns: ["Signal"])
+|> rename(columns: {"Signal":"count","Assembly":"assembly"})
 |> yield()

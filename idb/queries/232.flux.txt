@@ -1,4 +1,4 @@
-table|Signal|Assembly
+table|count|assembly
 0|167|_all_
 1|54|Conveyor
 2|19|Distributing
