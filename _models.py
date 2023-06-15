@@ -155,4 +155,11 @@ class SurrogateODE(tf.keras.Model):
 
     def call(self,t,y,u=None):
         return getattr(self, self.mode)(t,y,u)
+    
+    @staticmethod
+    def linear_fit_(m,t,y0):
+        m_ = m.numpy()
+        t_ = t.numpy()
+        y0_ = y0.numpy()
+        return tf.convert_to_tensor((m_.T*t_).T + y0_)
 
