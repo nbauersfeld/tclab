@@ -20,7 +20,7 @@ def monitor_data_(name):
     loss = pd.read_pickle(os.path.join(monitor_path,"loss.monitor.pickle"))    
     return data, loss
 
-def animate_data_(t,u,y,data,loss,steps=10,prefix=None,title="",icon=None,grab=False):
+def animate_data_(t,u,y,data,loss,ylim=[0,100],steps=10,prefix=None,title="",icon=None,grab=False):
     
     """
     animate
@@ -61,10 +61,11 @@ def animate_data_(t,u,y,data,loss,steps=10,prefix=None,title="",icon=None,grab=F
     mpl_figure_(fig,icon=icon)
 
     l_ = loss['loss']   
-    l_loss = ax2.plot(l_,":",color="grey",lw=0.8,animated=True)[0]
+    l_loss = ax2.plot(l_,":",color="grey",alpha=0.4,lw=0.8,animated=True)[0]
     l_step = ax2.axvline(x=0,color="grey",linestyle=":",linewidth=0.8,animated=True)
 
-    ax.set_ylim([0,100])    
+    ax.set_ylim(ylim)   
+
     p_anot = ax.annotate("loading...",
                        xy=(0,1),
                        xycoords="axes fraction",xytext=(10,-10),textcoords="offset points",
@@ -74,8 +75,9 @@ def animate_data_(t,u,y,data,loss,steps=10,prefix=None,title="",icon=None,grab=F
     p_base = ax.plot(t,y,":",color="black",lw=0.8,animated=True)[0]
     p_pred = ax.plot(t,y,".",color="red",ms=1,animated=True)[0]
     
-    u_base = ay3.fill_betweenx(u,t,color="grey",alpha=0.1,zorder=-1,
-                               edgecolor="white",
+    u_base = ay3.fill_betweenx(u,x1=t,x2=t,color="grey",alpha=0.1,zorder=-1,
+                               edgecolor="red",
+                               interpolate=True,
                                animated=True)
     
     A = Animation_(fig.canvas, [p_base, p_pred, u_base, l_step, l_loss, p_anot])
@@ -111,20 +113,20 @@ def animate_data_(t,u,y,data,loss,steps=10,prefix=None,title="",icon=None,grab=F
     plt.ioff()
     plt.show()
 
-def animate_(t,u,y,model,mode,steps,title,icon):
+def animate_(t,u,y,model,mode,ylim,steps,title,icon):
 
     title = f"{title} - {model}"
     prefix = f"{model}.{mode}"
 
     data,loss = monitor_data_(prefix)
 
-    animate_data_(t,u,y,data,loss,prefix=prefix,title=title,steps=steps,icon=icon,grab=True)
+    animate_data_(t,u,y,data,loss,ylim=ylim,prefix=prefix,title=title,steps=steps,icon=icon,grab=True)
 
 if __name__=="__main__":
 
     icon = os.path.join(os.getcwd(),"media","icon.ico")
 
-    model = 'model.4.6'
+    model = 'model.q.3'
     fname = os.path.join(os.getcwd(),"data","tclab.%s.csv"%(model))
     t,u,y,data_size = Helpers_.load_(fname)
     t,u,y = t.flatten(),u.flatten(),y.flatten()
@@ -136,7 +138,7 @@ if __name__=="__main__":
     #animate_(t,u,y,model,mode,steps=20,title=title,icon=icon)
 
     mode,title = "pinn","n-pin"
-    animate_(t,u,y,model,mode,steps=100,title=title,icon=icon)
+    animate_(t,u,y,model,mode,ylim=[10,50],steps=100,title=title,icon=icon)
 
 
 

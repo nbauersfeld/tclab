@@ -63,7 +63,7 @@ class NeuralPIN(tf.keras.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.func = tf.keras.Sequential([
-                tf.keras.layers.Dense(50,
+                tf.keras.layers.Dense(20,
                                     activation="tanh",
                                     kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42)),
                 tf.keras.layers.Dense(1,
