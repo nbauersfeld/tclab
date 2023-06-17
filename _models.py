@@ -1,16 +1,18 @@
-
-# 2023-06-14
+"""
+@version 2023-06-16
+"""
 import tensorflow as tf
 tf.keras.backend.set_floatx('float64')
 
 from scipy import constants
 import numpy as np
 
-# ode batch helper
-# builds y0, t, u, y, i per batch
-# stepwise data lookup
 class HelperODE():
-
+    """
+    ode batch helper
+    builds y0, t, u, y, i per batch
+    stepwise data lookup
+    """
     @staticmethod
     def batch_(t, u, y, batch_time, batch_size, data_size):
 
@@ -28,58 +30,61 @@ class HelperODE():
 
         return batch_y0, batch_t, batch_u, batch_y, batch_i
 
-# neural ode declaration
-# one dense layer with 50 neurons and tanh activation
-# one output layer with 1 neuron
 class NeuralODE(tf.keras.Model):
+    """
+    neural ode declaration
+    one dense layer with 50 neurons and tanh activation
+    one output layer with 1 neuron
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-  def __init__(self, *args, **kwargs):
+        self.func = tf.keras.Sequential([
+                tf.keras.layers.Dense(50,
+                                    activation="tanh",
+                                    kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42)),
+                tf.keras.layers.Dense(1,
+                                    kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42))
+            ],name="n-ode")
 
-    super().__init__(*args, **kwargs)
-
-    self.func = tf.keras.Sequential([
-            tf.keras.layers.Dense(50,
-                                  activation="tanh",
-                                  kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42)),
-            tf.keras.layers.Dense(1,
-                                  kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42))
-        ],name="n-ode")
-
-  def call(self, t, y):
-
-    y = tf.reshape(y,[-1,1])
-    y = self.func(y)
-    y = tf.convert_to_tensor(y[0,0],dtype=tf.float64)
-
-    return y
+    def call(self, t, y):
+        # call serially
+        y = tf.reshape(y,[-1,1])
+        y = self.func(y)
+        y = tf.convert_to_tensor(y[0,0],dtype=tf.float64)
+        return y
 
 class NeuralPIN(tf.keras.Model):
+    """
+    neural pin declaration
+    one dense layer with 50 neurons and tanh activation
+    one output layer with 1 neuron
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.func = tf.keras.Sequential([
+                tf.keras.layers.Dense(50,
+                                    activation="tanh",
+                                    kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42)),
+                tf.keras.layers.Dense(1,
+                                    kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42))
+            ],name="n-pin")
 
-  def __init__(self, *args, **kwargs):
+    def call(self, t, y):    
+        shape = tf.shape(y)
+        y = tf.reshape(y,[-1,1])
+        y = self.func(y)
+        y = tf.convert_to_tensor(y,dtype=tf.float64)
+        y = tf.reshape(y, shape)
+        return y
 
-    super().__init__(*args, **kwargs)
-
-    self.func = tf.keras.Sequential([
-            tf.keras.layers.Dense(50,
-                                  activation="tanh",
-                                  kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42)),
-            tf.keras.layers.Dense(1,
-                                  kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42))
-        ],name="n-pin")
-
-  def call(self, t, y):    
-    shape = tf.shape(y)
-    y = tf.reshape(y,[-1,1])
-    y = self.func(y)
-    y = tf.convert_to_tensor(y,dtype=tf.float64)
-    y = tf.reshape(y, shape)
-    return y
-
-# physical parameters for energy balance equation
-# https://apmonitor.com/pdc/index.php/Main/ArduinoModeling
-# with Q pickup by u_
 class ParamsODE():
-
+    """
+    physical parameters for energy balance equation
+    https://apmonitor.com/pdc/index.php/Main/ArduinoModeling
+    with Q pickup by u_
+    """
+    
     # energy balance
     K0 = 273.15
     Ta = 23.0         # K
@@ -109,11 +114,12 @@ class ParamsODE():
 
     t_num = t_delay + t_up + t_down
 
-# surrogate model itself
-#
-#
 class SurrogateODE(tf.keras.Model):
-
+    """
+    surrogate model for tclab by 
+    https://apmonitor.com/pdc/index.php/Main/ArduinoModeling
+    to compute with ParamsODE
+    """
     params = None
     mode = None
 
@@ -157,7 +163,13 @@ class SurrogateODE(tf.keras.Model):
         return getattr(self, self.mode)(t,y,u)
     
     @staticmethod
-    def linear_fit_(m,t,y0):
+    def linear_fit_(m, t, y0):
+        """
+        fit one step by a line (batch wise)
+        m: derivative tensor
+        t: time tensor
+        y0: offset tensor
+        """
         m_ = m.numpy()
         t_ = t.numpy()
         y0_ = y0.numpy()
