@@ -82,6 +82,22 @@ class _tclab:
         return pd.DataFrame(data,columns=["Time","Time(ns)","Q1","Q2","T1","T2"])
 
 class _tclabutils:
+
+    @staticmethod
+    def noise_(y, snr=100):
+                
+        y_ = y.copy()
+        sig_avg = np.mean(y_)
+        sig_db = 10 * np.log(sig_avg)
+
+        noi_avg_db = sig_db - snr
+        noi_avg = 10 ** (noi_avg_db / 10.)
+
+        noi_mean = 0.
+        y_noi = np.random.normal(noi_mean, np.sqrt(noi_avg), len(y_))
+        y_ += y_noi
+        
+        return y_
     
     @staticmethod
     def plot(t,u,y,t_=None,u_=None,y_=None,e_=None,title=""):

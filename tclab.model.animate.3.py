@@ -130,7 +130,7 @@ if __name__=="__main__":
     fname = os.path.join(os.getcwd(),"data","tclab.%s.csv"%(model))
     t,u,y,data_size = Helpers_.load_(fname)
     t,u,y = t.flatten(),u.flatten(),y.flatten()
-
+    
     print(f"data {model:>10}")
     print(f"size {data_size:>10}")
 
