@@ -1,0 +1,9 @@
+table|count|assembly
+0|167|_all_
+1|54|Conveyor
+2|19|Distributing
+3|37|Filling
+4|1|InOut
+5|20|Packaging
+6|14|Separating
+7|22|Unpacking

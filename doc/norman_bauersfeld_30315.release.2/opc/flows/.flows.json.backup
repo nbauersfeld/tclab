@@ -1,0 +1,155 @@
+[
+    {
+        "id": "4a6b272a9c7337a3",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "866fbfca8cc21251",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://localhost:4841/freeopcua/server/",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    },
+    {
+        "id": "a5b0101a3c7c2800",
+        "type": "OpcUa-Client",
+        "z": "4a6b272a9c7337a3",
+        "endpoint": "866fbfca8cc21251",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "500",
+        "timeUnit": "ms",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "maxChunkCount": "1601",
+        "maxMessageSize": "104857600",
+        "receiveBufferSize": "65535",
+        "sendBufferSize": "65535",
+        "name": "_a_client",
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "021d3516eb4a6349",
+                "6fec3d8cf5084e74"
+            ]
+        ]
+    },
+    {
+        "id": "e342dd65faeac13e",
+        "type": "inject",
+        "z": "4a6b272a9c7337a3",
+        "name": "_a_topic",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "ns=2;i=5",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "a5b0101a3c7c2800"
+            ]
+        ]
+    },
+    {
+        "id": "d9defb4dfc7ecf50",
+        "type": "debug",
+        "z": "4a6b272a9c7337a3",
+        "name": "_a_debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "021d3516eb4a6349",
+        "type": "function",
+        "z": "4a6b272a9c7337a3",
+        "name": "_u(t)_",
+        "func": "\nvar _t = msg.payload[2][1]\nvar _v = msg.payload[0][1]\n\n_v = _v > 100 || _v < 0 ? undefined : _v;\n\nvar _msg = { \n    topic: \"u\",\n    payload: {\n        \"t\": _t, \n        \"v\": _v,\n        \"unit\": \"%\"\n    }\n    };\n    \nreturn _msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 140,
+        "wires": [
+            [
+                "d1a5e2b002629f8b"
+            ]
+        ]
+    },
+    {
+        "id": "6fec3d8cf5084e74",
+        "type": "function",
+        "z": "4a6b272a9c7337a3",
+        "name": "_y(t)_",
+        "func": "\nvar _t = msg.payload[2][1]\nvar _v = msg.payload[1][1]/1000.\n\n_v = _v > 100 || _v <0 ? undefined : _v;\n\nvar _msg = {\n    topic: \"y\",\n    payload: {\n        \"t\": _t, \n        \"v\": _v,\n        \"unit\": \"°C\"\n    }\n    };\n    \nreturn _msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "d1a5e2b002629f8b"
+            ]
+        ]
+    },
+    {
+        "id": "d1a5e2b002629f8b",
+        "type": "function",
+        "z": "4a6b272a9c7337a3",
+        "name": "_str_",
+        "func": "\nvar _msg = {\n    topic: msg.topic,\n    payload: \"\" + msg.payload[\"t\"] + \",\" + msg.payload[\"v\"]\n};\n\nreturn _msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 320,
+        "wires": [
+            [
+                "d9defb4dfc7ecf50"
+            ]
+        ]
+    }
+]
