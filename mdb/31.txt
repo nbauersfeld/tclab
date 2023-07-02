@@ -1,0 +1,28 @@
+[
+  // 2023-07-01
+  // children checkup
+  {
+    $match: {
+      "childs.0": {
+        $exists: true,
+      },
+    },
+  },
+  // join
+  {
+    $lookup: {
+      from: "Systems",
+      localField: "_id",
+      foreignField: "childs",
+      as: "system",
+    },
+  },
+  // array to object hub
+  {
+    $set: {
+      system: {
+        $arrayElemAt: ["$system", 0],
+      },
+    },
+  },
+]

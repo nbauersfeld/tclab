@@ -1,8 +1,10 @@
 """
-@version 2023-06-16
+@version 2023-07-02
 """
 import tensorflow as tf
 tf.keras.backend.set_floatx('float64')
+
+import tfdiffeq
 
 from scipy import constants
 import numpy as np
@@ -29,6 +31,110 @@ class HelperODE():
            batch_u = None
 
         return batch_y0, batch_t, batch_u, batch_y, batch_i
+    
+    @staticmethod
+    def test_(device,model,t,u,y,data_size,name,verbose=0):
+    
+        batch_time = 2
+        batch_due = 0
+        batch_size = int((data_size-batch_due)/batch_time)
+        
+        with tf.device(device):
+            
+            batch_y0,batch_t,_, batch_y,batch_i = HelperODE.batch_(
+                t, None, y, 
+                batch_size=batch_size, 
+                batch_time=batch_time, 
+                data_size=data_size)
+            
+            # against model test
+            y_test = tfdiffeq.odeint(model, batch_y0, batch_t, method="dopri5")
+            l_test = tf.reduce_mean(tf.square(batch_y - y_test))
+            y_test = y_test.numpy().flatten() 
+
+            # energy balance surrogate compare
+            params = ParamsODE()
+            params.alpha = 0.
+            balan = SurrogateODE(params=params)
+
+            y_bala = tfdiffeq.odeint(balan, batch_y0, batch_t)
+            l_bala = tf.reduce_mean(tf.square(batch_y - y_bala))
+            y_bala = y_bala.numpy().flatten()
+
+        if verbose:
+            print(f"{name}")
+            print(f"data size {data_size}; batch time {batch_time} due {batch_due} size {batch_size}")
+            print(f"loss test {l_test:.6f} and surrogate {l_bala:.6f}")
+
+        return dict(
+            t=t,u=u,y=y,data_size=data_size,
+            batch_time=batch_time,batch_due=batch_due,batch_size=batch_size,
+            y_test=y_test,l_test=l_test,
+            y_bala=y_bala,l_bala=l_bala,
+            batch_i=batch_i
+        )
+    
+    @staticmethod
+    def plot_(ts,us,ys,yy,loss,indizes,size,name,model_name,dpi=80):
+
+        import matplotlib.pyplot as plt
+
+        plt.rcParams["font.size"] = 8
+        plt.rcParams["figure.dpi"] = dpi
+        plt.rcParams["lines.linewidth"] = .8
+
+        marker_size = 1
+
+        ncols,nrows = 1,2
+        nwidth,nheight = 16,4
+
+        fig, axx = plt.subplots(nrows=nrows,ncols=ncols,figsize=[nwidth*ncols,nheight*nrows],dpi=plt.rcParams["figure.dpi"])
+        fig.subplots_adjust(right=0.75)
+
+        # model test
+
+        ax = axx[0]
+
+        ax.plot(ts,ys,":",color="grey",label="y(%s)"%(name))
+
+        i_ = indizes
+        a_ = np.argsort(i_)
+        t_ = ts[i_[a_]]
+        y_ = yy[0][-size:][a_]
+
+        ax.plot(t_,y_,':o',ms=marker_size,label="y(test)",color="green")
+
+        ax.legend()
+        ax.set_title(f"test:{model_name}:batch {size:d}:loss {loss[0]:.6f}",x=0,ha="left")
+
+        ax = ax.twinx()
+        ax.plot(ts,us,":",label="u",color="gray")
+
+        # balance equivalence
+
+        ax = axx[1]
+
+        ax.plot(ts,ys,":",color="grey",label="y(%s)"%(name))
+
+        i_ = indizes
+        a_ = np.argsort(i_)
+        t_ = ts[i_[a_]]
+        y_ = yy[1][-size:][a_]
+
+        ax.plot(t_,y_,':o',ms=marker_size,label="y(surr)",color="red")
+
+        ax.legend()
+        ax.set_title(f"surrogate:{model_name}:batch {size:d}:loss {loss[1]:.6f}",x=0,ha="left")
+
+        ax = ax.twinx()
+        ax.plot(ts,us,":",label="u",color="gray")
+
+        for ax in axx.ravel():
+            ax.set_xlabel("time(s)")
+            ax.set_ylabel("T(°C)")
+
+        plt.show()
+        plt.close()
 
 class NeuralODE(tf.keras.Model):
     """
@@ -40,7 +146,7 @@ class NeuralODE(tf.keras.Model):
         super().__init__(*args, **kwargs)
 
         self.func = tf.keras.Sequential([
-                tf.keras.layers.Dense(50,
+                tf.keras.layers.Dense(50, input_shape=(1,),
                                     activation="tanh",
                                     kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42)),
                 tf.keras.layers.Dense(1,
@@ -50,6 +156,30 @@ class NeuralODE(tf.keras.Model):
     def call(self, t, y):
         # call serially
         y = tf.reshape(y,[-1,1])
+        y = self.func(y)
+        y = tf.convert_to_tensor(y[0,0],dtype=tf.float64)
+        return y
+    
+class NeuralODE2(tf.keras.Model):
+    """
+    neural ode declaration; 2d implementation
+    one dense layer with 50 neurons and tanh activation
+    one output layer with 2 neuron
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.func = tf.keras.Sequential([
+                tf.keras.layers.Dense(50,
+                                    activation="tanh",
+                                    kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42)),
+                tf.keras.layers.Dense(2,
+                                    kernel_initializer=tf.keras.initializers.GlorotNormal(seed=42))
+            ],name="n-ode")
+
+    def call(self, t, y):
+        # call serially
+        y = tf.reshape(y,[-1,2])
         y = self.func(y)
         y = tf.convert_to_tensor(y[0,0],dtype=tf.float64)
         return y

@@ -1,0 +1,20 @@
+[
+  // 2023-07-01
+  // signals to parts
+  {
+    $lookup: {
+      from: "Parts",
+      localField: "part",
+      foreignField: "_id",
+      as: "part",
+    },
+  },
+  // array to object hub
+  {
+    $set: {
+      part: {
+        $arrayElemAt: ["$part", 0],
+      },
+    },
+  },
+]

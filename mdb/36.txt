@@ -1,0 +1,35 @@
+[
+  // 2023-07-01
+  // (lookup of view 35 should be possible too)
+  // signals to parts  
+  {
+    $lookup: {
+      from: "Parts",
+      localField: "part",
+      foreignField: "_id",
+      as: "part",
+    },
+  },
+  // array to object hub
+  {
+    $set: {
+      part: {
+        $arrayElemAt: ["$part", 0],
+      },
+    },
+  },
+  // mqtt pattern
+  {
+    $set: {
+      mqtt: {
+        $concat: [
+          "parts",
+          "/",
+          "$part.eid.-",
+          "/",
+          "$name",
+        ],
+      },
+    },
+  },
+]

@@ -1,0 +1,56 @@
+[
+  // 2023-07-01
+  // reference identifier
+  {
+    $set: {
+      eid: {
+        $concat: [
+          "=",
+          "$eid.=",
+          "+",
+          "$eid.+",
+          "-",
+          "$eid.-",
+        ],
+      },
+    },
+  },
+  // ref. identifer not given, use tag
+  {
+    $project: {
+      _id: 1,
+      name: 1,
+      eid: {
+        $ifNull: ["$eid", "$tag"],
+      },
+    },
+  },
+  // array to object (k,v) structure 
+  {
+    $project: {
+      _id: 1,
+      item: {
+        k: "$name",
+        v: "$eid",
+      },
+    },
+  },
+  // push to group
+  {
+    $group: {
+      _id: null,
+      items: {
+        $push: "$item",
+      },
+    },
+  },
+  // assemble object
+  {
+    $project: {
+      _id: 1,
+      components: {
+        $arrayToObject: "$items",
+      },
+    },
+  },
+]

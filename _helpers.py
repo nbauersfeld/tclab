@@ -59,6 +59,37 @@ class Helpers_():
         return t,u,y, data_size    
     
     @staticmethod
+    def tfload2_(fname):
+
+        import tensorflow as tf
+
+        """
+        read a tclab csv file
+        return t,u,y and size of data
+        """
+
+        data = pd.read_csv(fname)
+
+        for key in ['Time','Time(ns)']: data[key] = data[key].astype(np.int64)
+        for key in ['Q1','Q2','T1','T2']: data[key] = data[key].astype(np.float64)
+
+        # time
+        t = data["Time(ns)"].to_numpy().astype(np.int64)
+        t = ((t-t[0])/1e9).astype(np.int64)
+        # input
+        u = data[["Q1","Q2"]].to_numpy()
+        # output
+        y = data[["T1","T2"]].to_numpy()
+
+        data_size = len(y)
+
+        t = tf.convert_to_tensor(t,dtype=tf.float64)
+        u = tf.convert_to_tensor(u,dtype=tf.float64)
+        y = tf.convert_to_tensor(y,dtype=tf.float64)
+
+        return t,u,y, data_size   
+    
+    @staticmethod
     def load_(fname):
 
         """
@@ -82,6 +113,31 @@ class Helpers_():
         data_size = len(y)
 
         return t,u,y, data_size        
+    
+    @staticmethod
+    def load2_(fname):
+
+        """
+        read a tclab csv file
+        return t,u,y and size of data
+        """
+
+        data = pd.read_csv(fname)
+
+        for key in ['Time','Time(ns)']: data[key] = data[key].astype(np.int64)
+        for key in ['Q1','Q2','T1','T2']: data[key] = data[key].astype(np.float64)
+
+        # time
+        t = data["Time(ns)"].to_numpy().astype(np.int64)
+        t = ((t-t[0])/1e9).astype(np.int64)
+        # input
+        u = data[["Q1","Q2"]].to_numpy()
+        # output
+        y = data[["T1","T2"]].to_numpy()
+
+        data_size = len(y)
+
+        return t,u,y, data_size            
 
 if __name__=="__main__":
 

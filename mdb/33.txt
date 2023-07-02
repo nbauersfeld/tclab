@@ -1,0 +1,25 @@
+[
+  // 2023-07-01
+  {
+    $match: {
+      childs: {
+        $exists: false,
+      },
+    },
+  },
+  // reference identifier
+  {
+    $set: {
+      eid: {
+        $concat: [
+          "=",
+          "$eid.=",
+          "+",
+          "$eid.+",
+          "-",
+          "$eid.-",
+        ],
+      },
+    },
+  },
+]
