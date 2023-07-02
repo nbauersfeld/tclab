@@ -1,0 +1,2 @@
+table|_measurement|past|before
+0|shellies|82.52341363123351|77.90302917850286

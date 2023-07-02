@@ -1,0 +1,2 @@
+table|_measurement|delay|maximum|minimum
+0|DS_SS23_TrayStates_B|446|2023-06-12T09:13:46.921699+00:00|2023-06-12T09:06:20.070305+00:00
